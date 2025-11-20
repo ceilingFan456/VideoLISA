@@ -94,6 +94,8 @@ class VideoCapture:
         # IMPORTANT: sort them numerically / lexicographically
         image_files.sort()
 
+        print(f"image_files: {image_files}")
+
         frames = []
 
         for img_file in image_files:

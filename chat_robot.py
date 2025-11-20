@@ -246,6 +246,7 @@ def main(args):
             ## read the images from folder path to get the image list
             frame_list = VideoCapture.load_all_frames_from_folder(str(folder))
             frame_name_list = [f for f in os.listdir(folder) if f.lower().endswith(".jpg")]
+            frame_name_list.sort()
 
             # frame_list = VideoCapture.load_all_frames_from_video(video_path)
             total_frames = len(frame_list)

@@ -204,6 +204,8 @@ def main(args):
         else:
             ## load images from frames.
             frame_list = VideoCapture.load_all_frames_from_folder(video_path)
+        
+        # print(f"Processing, frame_list:{frame_list}")
         total_frames = len(frame_list)
         print("Video loaded, preparing input.")
 
