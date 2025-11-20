@@ -2,6 +2,7 @@ import cv2
 import random
 import numpy as np
 from copy import deepcopy
+import os
 
 
 class VideoCapture:
@@ -80,4 +81,27 @@ class VideoCapture:
         cap.release()
         print(f"Total frames read: {frame_count}")
 
+        return frames
+
+    @staticmethod
+    def load_all_frames_from_folder(folder_path):
+        # get all .jpg images
+        image_files = [
+            f for f in os.listdir(folder_path)
+            if f.lower().endswith(".jpg") or f.lower().endswith(".png")
+        ]
+        
+        # IMPORTANT: sort them numerically / lexicographically
+        image_files.sort()
+
+        frames = []
+
+        for img_file in image_files:
+            img_path = os.path.join(folder_path, img_file)
+            frame = cv2.imread(img_path)  # BGR format, same as VideoCapture.read()
+            if frame is None:
+                raise ValueError(f"Failed to load image: {img_path}")
+            frames.append(frame)
+
+        print(f"Total frames read: {len(frames)}")
         return frames

@@ -199,7 +199,11 @@ def main(args):
         vid_save_dir = os.path.join(args.vis_save_path, os.path.basename(video_path).split('.')[0])
         os.makedirs(vid_save_dir, exist_ok=True)
 
-        frame_list = VideoCapture.load_all_frames_from_video(video_path)
+        if video_path.endswith(".mp4") or video_path.endswith(".avi") or video_path.endswith(".mov"):
+            frame_list = VideoCapture.load_all_frames_from_video(video_path)
+        else:
+            ## load images from frames.
+            frame_list = VideoCapture.load_all_frames_from_folder(video_path)
         total_frames = len(frame_list)
         print("Video loaded, preparing input.")
 

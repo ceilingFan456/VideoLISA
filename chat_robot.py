@@ -158,6 +158,13 @@ def main(args):
         **kwargs
     )
 
+    ## print model total parameter count 
+    total_params = sum(p.numel() for p in model.parameters())
+    print(f"Total params: {total_params/1e6:.2f}M")
+    ## print model trainable parameter count
+    trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
+    print(f"Trainable params: {trainable_params/1e6:.2f}M")
+
     model.config.eos_token_id = tokenizer.eos_token_id
     model.config.bos_token_id = tokenizer.bos_token_id
     model.config.pad_token_id = tokenizer.pad_token_id
@@ -185,8 +192,8 @@ def main(args):
     print(f"Total params: {total_all/1e6:.2f}M")
 
     from pathlib import Path
-    IN_ROOT  = Path("/users/qiming/robot_test/final_test_set/run5_test105")
-    OUT_BASE = Path("/users/qiming/robot_data/final_test_set/run5_test105_videolisa")
+    IN_ROOT  = Path("/users/qiming/robot_test/final_test_set/roboengine_test_video_format")
+    OUT_BASE = Path("/users/qiming/robot_data/final_test_set/roboengine_test_video_videolisa")
 
     def _ensure_dir(d: Path):
         os.makedirs(d, exist_ok=True)
@@ -201,7 +208,7 @@ def main(args):
 
     from tqdm import tqdm
     present_prompts = ["robot arm", "gripper", "robot"]
-    for folder in tqdm(folders[:3], desc="Processing folders"):
+    for folder in tqdm(folders, desc="Processing folders"):
         for i in range(1):
             # # Prepare text prompt
             # conv = conversation_lib.conv_templates[args.conv_type].copy()
